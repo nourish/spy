@@ -76,20 +76,23 @@ func (s *Spy) Start() {
 
 	//initialize matchers
 	msg := ""
-	if s.Include != "" {
-		path := join(s.dir, s.Include)
-		msg += fmt.Sprintf(" (including %s)", shorten(path))
-		s.matcher.set(path)
-	} else if s.Exclude != "" {
-		path := join(s.dir, s.Exclude)
-		msg += fmt.Sprintf(" (excluding %s)", shorten(path))
-		s.matcher.set(path)
-		s.matcher.include = false
-	} /* else match all! */
+	// if s.Include != "" {
+	// 	path := join(s.dir, s.Include)
+	// 	msg += fmt.Sprintf(" (including %s)", shorten(path))
+	// 	s.matcher.set(path)
+	// } else if s.Exclude != "" {
+	// 	path := join(s.dir, s.Exclude)
+	// 	msg += fmt.Sprintf(" (excluding %s)", shorten(path))
+	// 	s.matcher.set(path)
+	// 	s.matcher.include = false
+	// } /* else match all! */
 
 	//watch root path!
-	s.watch(s.dir)
-	s.info("Watching %s%s", shorten(s.dir), msg)
+	dirs := strings.Split(s.dir, ",")
+	for _, dir := range dirs {
+		s.watch(dir)
+		s.info("Watching %s%s", shorten(dir), msg)
+	}
 
 	//queue spy to close
 	go s.handleEvents()

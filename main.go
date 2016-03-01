@@ -7,7 +7,7 @@ import (
 	"os/signal"
 	"time"
 
-	"github.com/jpillora/spy/spy"
+	"github.com/nourish/spy/spy"
 )
 
 var VERSION string = "0.0.0-src" //set via ldflags
